@@ -18,7 +18,7 @@ Create port categorization by continent/area
 
 Add donation message / thanks after accepting trade.
 
-##Ideas
+## Ideas
 
 Store names & donations.
 
