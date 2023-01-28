@@ -16,6 +16,13 @@ Add port/buff announcement on a timer
 
 Create port categorization by continent/area
 
+Add donation message / thanks after accepting trade.
+
+##Ideas
+
+Store names & donations.
+
+Create a leaderboard for top donations. Can have it in a dialog as "[donators] / [donors] / [leaderboard]"
 
 ## Installation
 
