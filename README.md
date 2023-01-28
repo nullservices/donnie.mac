@@ -1,5 +1,7 @@
 # custports.mac
+Based on TheDroodUrLookingFor PortBot.mac -- https://www.mmobugs.com/forums/index.php?threads/guild-port-bot.32205/
 
+Butchered and rebuilt it for my own needs on the eqemu Retribution server. Find Donnie the druid in the bazaar for a demo & services.
 
 EQ Druid Port/Buff bot w/ NPC like dialog. 
 
