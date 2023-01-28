@@ -184,7 +184,7 @@ CHATMETHOD Buffing: ${Target.CleanName} -- ${BuffToCast} --
 
 Sub Event_Hail(Line,Sender)
 /if (!${Me.Class.Name.Equal[Druid]}) /return
-/Tell ${Sender} Greetings Traveller, How may I be of [service] to you?
+/Tell ${Sender} Greetings ${Sender}, How may I be of [service] to you? *Please say only the word*
 /plugin mq2cast load
 /return
 
@@ -422,14 +422,6 @@ Sub Event_Toxxulia(Line,Sender)
 Sub Event_Butcher(Line,Sender)
 /call Port "${Sender}" "Circle of Butcher"
 /return
-
-
-
-|------------------------------------------------------------| 
-|          End Events 
-|------------------------------------------------------------|
-
-
 
 
 
