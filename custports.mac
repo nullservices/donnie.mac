@@ -23,7 +23,6 @@
 |          Events 
 |------------------------------------------------------------| 
 #Event Hail "#1# says, 'Hail, |${Me.Name}|'"
-|#Event Ports "#1# tells you, 'ports'"
 #Event MainPort  "#1# tells you, 'port'"
 #Event Buff  "#1# tells you, 'buff'"
 #Event Services "#1# tells you, 'service'"
@@ -193,13 +192,6 @@ Sub Event_Services(Line,Sender)
 /delay 1s
 /Tell ${Sender} I can either [port] you or [buff] you. *shakes cup* Put the tip in here *shakes cup*
 /return
-
-|Sub Event_Ports(Line,Sender)
-|/if (!${Me.Class.Name.Equal[Druid]}) /return
-|/tell ${Sender} Available Ports: Butcher
-|/invite ${Sender}
-|/return
-
 
 Sub Event_List(Line,Sender)
 /if (!${Me.Class.Name.Equal[Druid]}) /return
