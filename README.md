@@ -3,8 +3,6 @@ EQ Druid Port/Buff bot w/ NPC like dialog.
 
 Utilizes MQ2Cast &amp; the /casting command for ports &amp; buffs.
 
-The macro will accept tips and other types of trades, buff and port based on spells available.
-
 Based on TheDroodUrLookingFor PortBot.mac -- https://www.mmobugs.com/forums/index.php?threads/guild-port-bot.32205/
 
 Butchered and rebuilt it for my own needs on the eqemu Retribution server. Find Donnie the druid in the bazaar for a demo & services.
