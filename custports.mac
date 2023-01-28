@@ -113,7 +113,7 @@ CHATMETHOD [NBB]++ PORT/BUFF BOT HAS STARTED ++[NBB]
 /goto :MainLoop
 /return
 |------------------------------------------------------------| 
-|          Other Rountines
+|          Donation & Med Cycle
 |------------------------------------------------------------| 
 Sub Med
 /afk ${MedMessage}
@@ -127,6 +127,7 @@ Sub Money
 /if (${Window[TradeWnd].HisTradeReady}) {
 CHATMETHOD1 Received a donation from ${Target.CleanName}.
 CHATMETHOD Received a donation from ${Target.CleanName}.
+/Tell ${Target.CleanName} Thank you for the donation!
 /notify TradeWnd TRDW_Trade_Button leftmouseup
 }
 /delay 1s
