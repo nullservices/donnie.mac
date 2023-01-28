@@ -8,9 +8,13 @@ The macro will accept tips and other types of trades, buff and port based on spe
 
 ## Future Updates
 
-Put in fail safes for actions requested if the person is not in the group.
+Add fail safes for actions requested if the person is not in the group.
 
-Put in fail safes for being in group after port duration or in group without porting for a time period.
+Add fail safes for being in group after port duration or in group without porting for a time period.
+
+Add port/buff announcement on a timer
+
+Create port categorization by continent/area
 
 
 ## Installation
