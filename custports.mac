@@ -1,0 +1,438 @@
+|------------------------------------------------------------| 
+| 	Port/Buff Druid NPC Mac. 	     		     
+|		Utilizes MQ2Cast & the /casting for	     	
+|		ports & buffs				     
+|		Cobbled together by: StinkySandals 	     
+|			v1.0			             	
+|------------------------------------------------------------| 
+#turbo
+|------------------------------------------------------------| 
+|          Includes 
+|------------------------------------------------------------| 
+|------------------------------------------------------------| 
+|          Defines 
+|------------------------------------------------------------| 
+|#define CHATMETHOD          "/if (${ShowDebug}) /i say"
+#define CHATMETHOD          "/if (${ShowDebug}) /bc"
+#define CHATMETHOD1       "/echo"
+#define CHATMETHOD2       "/t" 
+|------------------------------------------------------------| 
+|          Events 
+|------------------------------------------------------------| 
+|------------------------------------------------------------| 
+|          Events 
+|------------------------------------------------------------| 
+#Event Hail "#1# says, 'Hail, |${Me.Name}|'"
+|#Event Ports "#1# tells you, 'ports'"
+#Event MainPort  "#1# tells you, 'port'"
+#Event Buff  "#1# tells you, 'buff'"
+#Event Services "#1# tells you, 'service'"
+#Event Invite "#1# tells you, 'invite'"
+#Event List "#1# tells you, 'list'"
+#Event CobaltScar "#1# tells you, 'cobalt'"
+#Event CobaltScar "#1# tells you, 'cobalt scar'"
+#Event WakeningLands "#1# tells you, 'wakening'"
+#Event WakeningLands "#1# tells you, 'wakening lands'"
+#Event Skyfire "#1# tells you, 'skyfire'"
+#Event Twilight "#1# tells you, 'twlight'"
+#Event PoKnowledge "#1# tells you, 'pok'"
+#Event GreatDivide "#1# tells you, 'great divide'"
+#Event EmeraldJungle "#1# tells you, 'emerald jungle'"
+#Event Dawnshroud "#1# tells you, 'dawnshroud'"
+#Event Misty "#1# tells you, 'misty'"
+#Event Dreadlands "#1# tells you, 'dreadlands'"
+#Event Ro "#1# tells you, 'ro'"
+#Event Feerrott "#1# tells you, 'feerrott'"
+#Event Iceclad "#1# tells you, 'iceclad'"
+#Event Steamfont "#1# tells you, 'steamfont'"
+#Event Lavastorm "#1# tells you, 'lavastorm'"
+#Event Grimling "#1# tells you, 'grimling'"
+#Event Stonebrunt "#1# tells you, 'stonebrunt'"
+#Event Nexus "#1# tells you, 'nexus'"
+#Event Surefall "#1# tells you, 'surefall'"
+#Event Commonlands "#1# tells you, 'commonlands'"
+#Event Karana "#1# tells you, 'karana'"
+#Event Toxxulia "#1# tells you, 'tox'"
+#Event Butcher "#1# tells you, 'butcher'"
+#Event HP "#1# tells you, 'HP'"
+#Event STR "#1# tells you, 'STR'"
+#Event DS "#1# tells you, 'DS'"
+#Event REGEN "#1# tells you, 'REGEN'"
+#Event MOVEMENT "#1# tells you, 'MOVEMENT'"
+#Event EB "#1# tells you, 'EB'"
+#Event Skinlikenature "#1# tells you, 'skin like nature'"
+#Event SkinlikeDiamond  "#1# tells you, 'Skin like Diamond'"
+#Event SkinlikeRock  "#1# tells you, 'Skin like Rock'"
+#Event Stormstrength "#1# tells you, 'storm strength'"
+#Event StrengthofStone  "#1# tells you, 'Strength of Stone'"
+#Event StrengthofEarth  "#1# tells you, 'Strength of Earth'"
+#Event ShieldofThorns  "#1# tells you, 'Shield of Thorns'"
+#Event ShieldofSpikes   "#1# tells you, 'Shield of Spikes'"
+#Event ShieldofThistles  "#1# tells you, 'Shield of Thistles'"
+#Event Chloroplast  "#1# tells you, 'Chloroplast'"
+#Event Regeneration  "#1# tells you, 'Regeneration'"
+#Event SpiritofWolf  "#1# tells you, 'Spirit of Wolf'"
+#Event EverlastingBreath  "#1# tells you, 'Everlasting Breath'"
+
+|------------------------------------------------------------| 
+|          Main Rountine 
+|------------------------------------------------------------| 
+Sub Main
+|-----------EQBC----------------------------------------=----|
+/Declare UseEQBC			bool outer TRUE
+/Declare EQBCServerAddr		string outer "127.0.0.1"
+/Declare EQBCPort			string outer "2112"
+/Declare EQBCPassword		string outer ""
+|-----------Items--------------------------------------------|
+/declare HorseItem			string outer "Jungle Raptor Saddle"
+/declare UseHorse			bool outer TRUE
+/declare ShowDebug			bool outer TRUE
+/declare TargetName 		string outer
+/declare MaxRequests		int outer 20
+|------------------------------------------------------------| 
+
+/if (!${Defined[MedMessage]}) /declare MedMessage string outer ...Meditating... Low on mana.
+/tgb on
+
+/popup Port/Buff Bot Loaded ${Me.Name}. Check Mq2 Window for Errors. 
+/if (${UseEQBC}) /bccmd connect ${EQBCServerAddr} ${EQBCPort} ${EQBCPassword}
+
+CHATMETHOD1 [NBB]+ Initialized ++[NBB]
+CHATMETHOD [NBB]+ Initialized ++[NBB]
+CHATMETHOD1 [NBB]++ PORT/BUFF BOT HAS STARTED ++[NBB]
+CHATMETHOD [NBB]++ PORT/BUFF BOT HAS STARTED ++[NBB]
+
+:MainLoop
+/if (${MacroQuest.GameState.Equal[CHARSELECT]}) /end
+/if (${Me.PctMana} < 40) /call Med
+/if (${Window[TradeWnd].Open}) /call Money
+/if (${Me.Standing} && !${Me.Mount.ID}) /sit
+/doevents
+/if (${MacroQuest.GameState.Equal[CHARSELECT]}) /end
+/delay 5
+/if (${Zone.ID}!=151) /casting gate
+/goto :MainLoop
+/return
+|------------------------------------------------------------| 
+|          Other Rountines
+|------------------------------------------------------------| 
+Sub Med
+/afk ${MedMessage}
+/if (!${Me.Sitting} && !${Me.Mount.ID}) /sit on
+/delay 5m ${Me.PctMana} > 60
+/return
+
+Sub Money
+/delay 3s ${Window[TradeWnd].Open}
+/delay 3s ${Window[TradeWnd].HisTradeReady}
+/if (${Window[TradeWnd].HisTradeReady}) {
+CHATMETHOD1 Received a donation from ${Target.CleanName}.
+CHATMETHOD Received a donation from ${Target.CleanName}.
+/notify TradeWnd TRDW_Trade_Button leftmouseup
+}
+/delay 1s
+/return
+
+|------------------------------------------------------------| 
+|          Druid 
+|------------------------------------------------------------|
+/return
+
+Sub Port(string PortTarget, string PortToCast)
+/varset TargetName ${PortTarget}
+/if (${Me.Sitting}) /stand up
+/if (${Window[TradeWnd].Open}) /call Money
+/delay 2
+/target id ${Spawn[PC ${TargetName}].ID}
+/delay 1s ${Target.ID}
+CHATMETHOD1 Porting: ${Target.CleanName} -- ${PortToCast} --
+CHATMETHOD Porting: ${Target.CleanName} -- ${PortToCast} --
+/casting "${PortToCast}"
+/delay 1s !${Me.Casting.ID}
+/call Group
+/return
+
+Sub Group(Line,Sender)
+/delay 20s
+/if (${Spawn[PC ${TargetName}].ID} == NULL) /disband
+/return
+|------------------------------------------------------------| 
+|          Buff Sub
+|------------------------------------------------------------| 
+
+/return
+
+Sub Buffing(string BuffTarget, string BuffToCast)
+/varset TargetName ${BuffTarget}
+/if (${Me.Sitting}) /stand up
+/if (${Window[TradeWnd].Open}) /call Money
+/delay 2
+/target id ${Spawn[PC ${TargetName}].ID}
+/delay 1s ${Target.ID}
+CHATMETHOD1 Buffing: ${Target.CleanName} -- ${BuffToCast} --
+CHATMETHOD Buffing: ${Target.CleanName} -- ${BuffToCast} --
+/casting "${BuffToCast}"
+/delay 1s !${Me.Casting.ID}
+/return
+
+
+
+|------------------------------------------------------------| 
+|   Chatter
+|------------------------------------------------------------| 
+
+
+Sub Event_Hail(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/Tell ${Sender} Greetings Traveller, How may I be of [service] to you?
+/plugin mq2cast load
+/return
+
+Sub Event_Services(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} I can either [port] you or [buff] you. *shakes cup* Put the tip in here *shakes cup*
+/return
+
+|Sub Event_Ports(Line,Sender)
+|/if (!${Me.Class.Name.Equal[Druid]}) /return
+|/tell ${Sender} Available Ports: Butcher
+|/invite ${Sender}
+|/return
+
+
+Sub Event_List(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} Available Ports: [cobalt scar], [wakening lands], [skyfire], [pok], [great divide], [emerald jungle], [misty], [dreadlands], [ro], [feerrott], [iceclad], [steamfont], [lavastorm], [grimling], [stonebrunt], [nexus], [surefall], [commonlands], [karana], [tox], [butcher]
+/return
+
+Sub Event_Invite(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/invite ${Sender} 
+/delay 7s
+/target ${Sender}
+/makeleader ${Sender} 
+/return
+
+Sub Event_MainPort(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} Please drop your group so I can [invite] you. I will make you leader so you can reinvite your group if needed. Once you are ready, tell me the zone name from the [list] of available port locations.
+/return
+
+
+|------------------------------------------------------------| 
+|   Buffing
+|------------------------------------------------------------|
+
+Sub Event_Buff(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} Please tell me the type of buff you would like. [HP], [STR], [DS], [REGEN], [MOVEMENT], [EB]
+/return
+
+Sub Event_HP(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} HP Buffs: [Skin like Nature] (46)| [Skin like Diamond] (36)| [Skin like Rock] (14)|
+/return
+
+Sub Event_STR(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} Str Buff: [Storm Strength] (44)| [Strength of Stone] (34)| [Strength of Earth] (07)|
+/return
+
+Sub Event_DS(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} DS: [Shield of Thorns] (47)| [Shield of Spikes] (37)| [Shield of Thistles] (7)|
+/return
+
+Sub Event_Regen(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} Regen: [Chloroplast] (42)| [Regeneration] (34)|
+/return
+
+Sub Event_Movement(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} Movement: [Spirit of Wolf] (10)|
+/return
+
+Sub Event_EB(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} EB: [Everlasting Breath] (50)|
+/return
+
+Sub Event_Skinlikenature(Line,Sender)
+/call Buffing "${Sender}" "Skin like Nature"
+/return
+
+Sub Event_SkinlikeDiamond(Line,Sender)
+/call Buffing "${Sender}" "Skin like Diamond"
+/return
+
+Sub Event_SkinlikeRock(Line,Sender)
+/call Buffing "${Sender}" "Skin like Rock"
+/return
+
+Sub Event_Stormstrength(Line,Sender)
+/call Buffing "${Sender}" "Storm Strength"
+/return
+
+Sub Event_StrengthofStone(Line,Sender)
+/call Buffing "${Sender}" "Strength of Stone"
+/return
+
+Sub Event_StrengthofEarth(Line,Sender)
+/call Buffing "${Sender}" "Strength of Earth"
+/return
+
+Sub Event_ShieldofThorns(Line,Sender)
+/call Buffing "${Sender}" "Shield of Thorns"
+/return
+
+Sub Event_ShieldofSpikes(Line,Sender)
+/call Buffing "${Sender}" "Shield of Spikes"
+/return
+
+Sub Event_ShieldofThistles(Line,Sender)
+/call Buffing "${Sender}" "Shield of Thistles"
+/return
+
+Sub Event_Chloroplast(Line,Sender)
+/call Buffing "${Sender}" "Chloroplast"
+/return
+
+Sub Event_Regeneration(Line,Sender)
+/call Buffing "${Sender}" "Regeneration"
+/return
+
+Sub Event_SpiritofWolf(Line,Sender)
+/call Buffing "${Sender}" "Spirit of Wolf"
+/return
+
+Sub Event_EverlastingBreath(Line,Sender)
+/call Buffing "${Sender}" "Everlasting Breath"
+/return
+
+
+|------------------------------------------------------------| 
+|   Porting
+|------------------------------------------------------------|
+
+
+
+Sub Event_Lavastorm(Line,Sender)
+/call Port "${Sender}" "Circle of Lavastorm"
+/return
+
+Sub Event_CobaltScar(Line,Sender)
+/call Port "${Sender}" "Circle of Cobalt Scar"
+/return
+
+Sub Event_Twilight(Line,Sender)
+/call Port "${Sender}" "Circle of Twilight"
+/return
+
+Sub Event_WakeningLands(Line,Sender)
+/call Port "${Sender}" "Circle of Wakening Lands"
+/return
+
+Sub Event_Skyfire(Line,Sender)
+/call Port "${Sender}" "Wind of the North"
+/return
+
+Sub Event_PoKnowledge(Line,Sender)
+/call Port "${Sender}" "Circle of Knowledge"
+/return
+
+Sub Event_GreatDivide(Line,Sender)
+/call Port "${Sender}" "Circle of Great Divide"
+/return
+
+Sub Event_EmeraldJungle(Line,Sender)
+/call Port "${Sender}" "Wind of the South"
+/return
+
+Sub Event_Dawnshroud(Line,Sender)
+/call Port "${Sender}" "Circle of Dawnshroud"
+/return
+
+Sub Event_Misty(Line,Sender)
+/call Port "${Sender}" "Circle of Misty"
+/return
+
+Sub Event_Dreadlands(Line,Sender)
+/call Port "${Sender}" "Circle of the Combines"
+/return
+
+Sub Event_Ro(Line,Sender)
+/call Port "${Sender}" "Circle of the Ro"
+/return
+
+Sub Event_Feerrott(Line,Sender)
+/call Port "${Sender}" "Circle of Feerrott"
+/return
+
+Sub Event_Iceclad(Line,Sender)
+/call Port "${Sender}" "Circle of Iceclad"
+/return
+
+Sub Event_Steamfont(Line,Sender)
+/call Port "${Sender}" "Circle of Steamfont"
+/return
+
+Sub Event_Lavastorm (Line,Sender)
+/call Port "${Sender}" "Circle of Lavastorm"
+/return
+
+Sub Event_Grimling(Line,Sender)
+/call Port "${Sender}" "Circle of Grimling"
+/return
+
+Sub Event_Stonebrunt(Line,Sender)
+/call Port "${Sender}" "Circle of Stonebrunt"
+/return
+
+Sub Event_Nexus(Line,Sender)
+/call Port "${Sender}" "Circle of the Nexus"
+/return
+
+Sub Event_Surefall(Line,Sender)
+/call Port "${Sender}" "Circle of Surefall Glade"
+/return
+
+Sub Event_Commonlands(Line,Sender)
+/call Port "${Sender}" "Circle of Commons"
+/return
+
+Sub Event_Karana(Line,Sender)
+/call Port "${Sender}" "Circle of Karana"
+/return
+
+Sub Event_Toxxulia(Line,Sender)
+/call Port "${Sender}" "Circle of Toxxulia"
+/return
+
+Sub Event_Butcher(Line,Sender)
+/call Port "${Sender}" "Circle of Butcher"
+/return
+
+
+
+|------------------------------------------------------------| 
+|          End Events 
+|------------------------------------------------------------|
+
+
+
+
+
+|------------------------------------------------------------| 
+|          End Events 
+|------------------------------------------------------------|
