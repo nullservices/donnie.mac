@@ -364,7 +364,7 @@ Sub Event_Dreadlands(Line,Sender)
 /return
 
 Sub Event_Ro(Line,Sender)
-/call Port "${Sender}" "Circle of the Ro"
+/call Port "${Sender}" "Circle of Ro"
 /return
 
 Sub Event_Feerrott(Line,Sender)
