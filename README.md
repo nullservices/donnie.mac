@@ -21,6 +21,8 @@ Create port categorization by continent/area
 
 Add donation message / thanks after accepting trade.
 
+Auto recast if fizzle
+
 ## Ideas
 
 Store names & donations.
