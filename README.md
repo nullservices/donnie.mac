@@ -23,6 +23,8 @@ Add donation message / thanks after accepting trade.
 
 Auto recast if fizzle
 
+Decline invites.
+
 ## Ideas
 
 Store names & donations.
