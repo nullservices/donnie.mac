@@ -23,6 +23,8 @@ Add donation message / thanks after accepting trade.
 
 Auto recast if fizzle
 
+Include a Memming spell & Casting spell announcement
+
 Decline invites.
 
 ## Ideas
