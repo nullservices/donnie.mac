@@ -33,6 +33,8 @@ Store names & donations.
 
 Create a leaderboard for top donations. Can have it in a dialog as "[donators] / [donors] / [leaderboard]"
 
+Expand to other classes. Use the ${Me.Class.Name.Equal"CLASS"} syntax for class specific requests.
+
 ## Installation
 
 Download or copy the custports.mac to your MQ2 Macros folder.
