@@ -123,11 +123,10 @@ Sub Med
 
 Sub Money
 /delay 3s ${Window[TradeWnd].Open}
-/delay 3s ${Window[TradeWnd].HisTradeReady}
+/delay 5s ${Window[TradeWnd].HisTradeReady}
 /if (${Window[TradeWnd].HisTradeReady}) {
 CHATMETHOD1 Received a donation from ${Target.CleanName}.
 CHATMETHOD Received a donation from ${Target.CleanName}.
-/Tell ${Target.CleanName} Thank you for the donation!
 /notify TradeWnd TRDW_Trade_Button leftmouseup
 }
 /delay 1s
@@ -185,7 +184,6 @@ CHATMETHOD Buffing: ${Target.CleanName} -- ${BuffToCast} --
 Sub Event_Hail(Line,Sender)
 /if (!${Me.Class.Name.Equal[Druid]}) /return
 /Tell ${Sender} Greetings ${Sender}, How may I be of [service] to you? *Please say only the word*
-/plugin mq2cast load
 /return
 
 Sub Event_Services(Line,Sender)
