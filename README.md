@@ -55,3 +55,4 @@ https://macroquest.sourceforge.net/includes/manual.php
 
 https://www.redguides.com/community/threads/conditions-and-you-coding-tutorial-information.65300/
 
+https://docs.macroquest.org/reference/data-types/
