@@ -1,3 +1,12 @@
+/call Disband
+if groupsize = true or > 0 then /disband
+
+Call at the start of the :mainloop: 
+Call at the end of an event (or after /doevent in main loop)
+
+----
+
+
 |------------------------------------------------------------| 
 | 	Port/Buff Druid NPC Mac. 	     		     
 |		Utilizes MQ2Cast & the /casting for	     	
@@ -7,7 +16,7 @@
 |------------------------------------------------------------| 
 #turbo
 |------------------------------------------------------------| 
-|          Includes 
+|	Includes 
 |------------------------------------------------------------| 
 |------------------------------------------------------------| 
 |          Defines 
@@ -17,10 +26,7 @@
 #define CHATMETHOD1       "/echo"
 #define CHATMETHOD2       "/t" 
 |------------------------------------------------------------| 
-|          Events 
-|------------------------------------------------------------| 
-|------------------------------------------------------------| 
-|          Events 
+|	Events 
 |------------------------------------------------------------| 
 #Event Hail "#1# says, 'Hail, |${Me.Name}|'"
 #Event MainPort  "#1# tells you, 'port'"
@@ -28,6 +34,15 @@
 #Event Services "#1# tells you, 'service'"
 #Event Invite "#1# tells you, 'invite'"
 #Event List "#1# tells you, 'list'"
+#Event HP "#1# tells you, 'HP'"
+#Event STR "#1# tells you, 'STR'"
+#Event DS "#1# tells you, 'DS'"
+#Event REGEN "#1# tells you, 'REGEN'"
+#Event MOVEMENT "#1# tells you, 'MOVEMENT'"
+#Event EB "#1# tells you, 'EB'"
+|------------------------------------------------------------| 
+|     Druid Port Events 
+|------------------------------------------------------------| 
 #Event CobaltScar "#1# tells you, 'cobalt'"
 #Event CobaltScar "#1# tells you, 'cobalt scar'"
 #Event WakeningLands "#1# tells you, 'wakening'"
@@ -53,12 +68,10 @@
 #Event Karana "#1# tells you, 'karana'"
 #Event Toxxulia "#1# tells you, 'tox'"
 #Event Butcher "#1# tells you, 'butcher'"
-#Event HP "#1# tells you, 'HP'"
-#Event STR "#1# tells you, 'STR'"
-#Event DS "#1# tells you, 'DS'"
-#Event REGEN "#1# tells you, 'REGEN'"
-#Event MOVEMENT "#1# tells you, 'MOVEMENT'"
-#Event EB "#1# tells you, 'EB'"
+
+|------------------------------------------------------------| 
+|	Druid Buff Events 
+|------------------------------------------------------------| 
 #Event Skinlikenature "#1# tells you, 'skin like nature'"
 #Event SkinlikeDiamond  "#1# tells you, 'Skin like Diamond'"
 #Event SkinlikeRock  "#1# tells you, 'Skin like Rock'"
@@ -74,7 +87,7 @@
 #Event EverlastingBreath  "#1# tells you, 'Everlasting Breath'"
 
 |------------------------------------------------------------| 
-|          Main Rountine 
+|	Main Rountine / Loop
 |------------------------------------------------------------| 
 Sub Main
 |-----------EQBC----------------------------------------=----|
@@ -106,34 +119,34 @@ CHATMETHOD [NBB]++ PORT/BUFF BOT HAS STARTED ++[NBB]
 /if (${Me.PctMana} < 40) /call Med
 /if (${Window[TradeWnd].Open}) /call Money
 /if (${Me.Standing} && !${Me.Mount.ID}) /sit
+/if (!${Group.Member[1].Present}) /disband
 /doevents
 /if (${MacroQuest.GameState.Equal[CHARSELECT]}) /end
 /delay 5
 /if (${Zone.ID}!=151) /casting gate
 /goto :MainLoop
 /return
+
 |------------------------------------------------------------| 
-|          Donation & Med Cycle
+|	Donation & Med Cycle
 |------------------------------------------------------------| 
+Sub Money
+/delay 3s ${Window[TradeWnd].Open}
+/notify TradeWnd TRDW_Trade_Button leftmouseup
+}
+/delay 1s
+/return
+
 Sub Med
 /afk ${MedMessage}
 /if (!${Me.Sitting} && !${Me.Mount.ID}) /sit on
 /delay 5m ${Me.PctMana} > 60
 /return
 
-Sub Money
-/delay 3s ${Window[TradeWnd].Open}
-/delay 5s ${Window[TradeWnd].HisTradeReady}
-/if (${Window[TradeWnd].HisTradeReady}) {
-CHATMETHOD1 Received a donation from ${Target.CleanName}.
-CHATMETHOD Received a donation from ${Target.CleanName}.
-/notify TradeWnd TRDW_Trade_Button leftmouseup
-}
-/delay 1s
-/return
+
 
 |------------------------------------------------------------| 
-|          Druid 
+|	Druid Port & Disband Cycle
 |------------------------------------------------------------|
 /return
 
@@ -146,17 +159,19 @@ Sub Port(string PortTarget, string PortToCast)
 /delay 1s ${Target.ID}
 CHATMETHOD1 Porting: ${Target.CleanName} -- ${PortToCast} --
 CHATMETHOD Porting: ${Target.CleanName} -- ${PortToCast} --
+/delay 1s
+/say Memming ${PortToCast}
 /casting "${PortToCast}"
 /delay 1s !${Me.Casting.ID}
-/call Group
+/call Disband
 /return
 
-Sub Group(Line,Sender)
-/delay 20s
-/if (${Spawn[PC ${TargetName}].ID} == NULL) /disband
+Sub Disband(Line,Sender)
+/if (!${Group.Member[1].Present}) /disband
 /return
+
 |------------------------------------------------------------| 
-|          Buff Sub
+|	Buff Cycle
 |------------------------------------------------------------| 
 
 /return
@@ -174,8 +189,6 @@ CHATMETHOD Buffing: ${Target.CleanName} -- ${BuffToCast} --
 /delay 1s !${Me.Casting.ID}
 /return
 
-
-
 |------------------------------------------------------------| 
 |   Chatter
 |------------------------------------------------------------| 
@@ -184,6 +197,7 @@ CHATMETHOD Buffing: ${Target.CleanName} -- ${BuffToCast} --
 Sub Event_Hail(Line,Sender)
 /if (!${Me.Class.Name.Equal[Druid]}) /return
 /Tell ${Sender} Greetings ${Sender}, How may I be of [service] to you? *Please say only the word*
+/plugin mq2cast load
 /return
 
 Sub Event_Services(Line,Sender)
@@ -200,6 +214,8 @@ Sub Event_List(Line,Sender)
 
 Sub Event_Invite(Line,Sender)
 /if (!${Me.Class.Name.Equal[Druid]}) /return
+/disband
+/delay 2
 /invite ${Sender} 
 /delay 7s
 /target ${Sender}
@@ -214,7 +230,7 @@ Sub Event_MainPort(Line,Sender)
 
 
 |------------------------------------------------------------| 
-|   Buffing
+|  Druid Buffs
 |------------------------------------------------------------|
 
 Sub Event_Buff(Line,Sender)
@@ -313,7 +329,7 @@ Sub Event_EverlastingBreath(Line,Sender)
 
 
 |------------------------------------------------------------| 
-|   Porting
+|   Druid Ports
 |------------------------------------------------------------|
 
 
