@@ -42,7 +42,7 @@ Download or copy the custports.mac to your MQ2 Macros folder.
 ## Usage
 
 ```
-/mac custports.mac
+/mac donnie.mac
 ```
 
 ## MQ2 Macro Coding References:
