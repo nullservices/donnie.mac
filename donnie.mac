@@ -195,20 +195,17 @@ CHATMETHOD Buffing: ${Target.CleanName} -- ${BuffToCast} --
 
 Sub Event_Hail(Line,Sender)
 /Tell ${Sender} Greetings ${Sender}, How may I be of [service] to you? *Please say only the word*
-/plugin mq2cast load
+/return
+
+
+Sub Event_Services(Line,Sender)
+/if (${Me.Class.Name.Equal[Druid]}) /Tell ${Sender} I can either [port] you or [buff] you. *shakes cup* Put the tip in here *shakes cup*
 /return
 
 Sub Event_Services(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
-/delay 1s
-/Tell ${Sender} I can either [port] you or [buff] you. *shakes cup* Put the tip in here *shakes cup*
+/if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} I can [buff] you. *shakes cup* Put the tip in here *shakes cup*
 /return
 
-Sub Event_Services(Line,Sender)
-/if (!${Me.Class.Name.Equal[Cleric]}) /return
-/delay 1s
-/Tell ${Sender} I can [buff] you. *shakes cup* Put the tip in here *shakes cup*
-/return
 
 Sub Event_List(Line,Sender)
 /if (!${Me.Class.Name.Equal[Druid]}) /return
@@ -234,19 +231,13 @@ Sub Event_MainPort(Line,Sender)
 
 
 |------------------------------------------------------------| 
-|  Cleric Buffs
+|  Buffs
 |------------------------------------------------------------|
 
 Sub Event_Buff(Line,Sender)
-/if (!${Me.Class.Name.Equal[Cleric]}) /return
-/delay 1s
-/Tell ${Sender} Please tell me the type of buff you would like. [HP]
-/return
+/if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} Please tell me the type of buff you would like. [HP]
+/if (${Me.Class.Name.Equal[Druid]}) /Tell ${Sender} Please tell me the type of buff you would like. [HP], [STR], [DS], [REGEN], [MOVEMENT], [EB]
 
-Sub Event_HP(Line,Sender)
-/if (!${Me.Class.Name.Equal[Cleric]}) /return
-/delay 1s
-/Tell ${Sender} HP Buffs: [Aego] (60)| [Temp] (40)|
 /return
 
 Sub Event_Aego(Line,Sender)
@@ -257,20 +248,9 @@ Sub Event_Temp(Line,Sender)
 /call Buffing "${Sender}" "Temperance"
 /return
 
-|------------------------------------------------------------| 
-|  Druid Buffs
-|------------------------------------------------------------|
-
-Sub Event_Buff(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
-/delay 1s
-/Tell ${Sender} Please tell me the type of buff you would like. [HP], [STR], [DS], [REGEN], [MOVEMENT], [EB]
-/return
-
 Sub Event_HP(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
-/delay 1s
-/Tell ${Sender} HP Buffs: [Skin like Nature] (46)| [Skin like Diamond] (36)| [Skin like Rock] (14)|
+/if (${Me.Class.Name.Equal[Druid]}) /Tell ${Sender} HP Buffs: [Skin like Nature] (46)| [Skin like Diamond] (36)| [Skin like Rock] (14)|
+/if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} HP Buffs: [Aego] (60)| [Temp] (40)|
 /return
 
 Sub Event_STR(Line,Sender)
