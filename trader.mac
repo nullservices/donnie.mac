@@ -1,0 +1,94 @@
+|------------------------------------------------------------| 
+| 		Trader Bot 	     		     
+|		By: Donnie 	     
+|			v1.0			             	
+|------------------------------------------------------------| 
+#turbo
+|------------------------------------------------------------| 
+|	Includes 
+|------------------------------------------------------------| 
+|------------------------------------------------------------| 
+|          Defines 
+|------------------------------------------------------------| 
+|#define CHATMETHOD          "/if (${ShowDebug}) /i say"
+#define CHATMETHOD          "/if (${ShowDebug}) /bc"
+#define CHATMETHOD1       "/echo"
+#define CHATMETHOD2       "/t" 
+|------------------------------------------------------------| 
+|	Events 
+|------------------------------------------------------------| 
+#Event TraderOn  "#1# tells you, 'trader on'"
+#Event TraderOff  "#1# tells you, 'trader off'"
+
+|------------------------------------------------------------| 
+|	Main Rountine / Loop
+|------------------------------------------------------------|
+Sub Main
+/popup Trader Bot Loaded ${Me.Name}. Check Mq2 Window for Errors. 
+
+CHATMETHOD1 [NBB]+ Initialized ++[NBB]
+CHATMETHOD [NBB]+ Initialized ++[NBB]
+CHATMETHOD1 [NBB]++ Trader BOT HAS STARTED ++[NBB]
+CHATMETHOD [NBB]++ Trader BOT HAS STARTED ++[NBB]
+
+:MainLoop
+	/if (${MacroQuest.GameState.Equal[CHARSELECT]}) /end
+	/if (${Window[TradeWnd].Open}) /call Money
+	/doevents
+	/delay 5
+	/goto :MainLoop
+	/return
+|-------------------------------------------------------------|
+| Sub Trader On / Off
+|-------------------------------------------------------------|
+Sub TraderOn
+
+/if (!${Me.Trader}) { 
+   /delay 1s 
+   :OpenBazaarWnd 
+   /if (!${Window[BazaarWnd].Open}) /trader 
+   /delay 1s (${Window[BazaarWnd].Open}) 
+   /if (!${Window[BazaarWnd].Open}) /goto :OpenBazaarWnd 
+   /delay 1s 
+   /notify BazaarWnd BZW_Start_Button LeftMouseUp 
+   /delay 1s 
+   /echo Tradermode ON. 
+} 
+
+/delay 1s 
+/return 
+	
+Sub TraderOff
+
+/if (${Me.Trader}) { 
+   /delay 5  
+   /keypress esc
+   /delay 5 
+   /keypress esc
+   /delay 5 
+   /echo Tradermode Off. 
+} 
+
+/delay 1s 
+/return 
+
+|------------------------------------------------------------| 
+|	Donation & Med Cycle
+|------------------------------------------------------------| 
+Sub Money
+/delay 3s ${Window[TradeWnd].Open}
+/notify TradeWnd TRDW_Trade_Button leftmouseup
+}
+/delay 1s
+/return
+
+|-------------------------------------------------------------|
+| Events
+|-------------------------------------------------------------|
+Sub Event_TraderOn(Line,Sender)
+/call TraderOn
+/return
+
+Sub Event_TraderOff(Line,Sender)
+/call TraderOff
+/return
