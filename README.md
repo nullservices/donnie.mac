@@ -1,6 +1,7 @@
 # donnie.mac
-EQ Druid Port/Buff bot w/ NPC like dialog. 
-
+EQ Druid Buff/Port bot w/ NPC like dialog. 
+  ++Cleric Support Added: Buffs Aego / Temp added. 
+  
 Utilizes MQ2Cast &amp; the /casting command for ports &amp; buffs.
 
 Based on TheDroodUrLookingFor PortBot.mac -- https://www.mmobugs.com/forums/index.php?threads/guild-port-bot.32205/
