@@ -1,4 +1,4 @@
-# custports.mac
+# donnie.mac
 EQ Druid Port/Buff bot w/ NPC like dialog. 
 
 Utilizes MQ2Cast &amp; the /casting command for ports &amp; buffs.
@@ -7,7 +7,8 @@ Based on TheDroodUrLookingFor PortBot.mac -- https://www.mmobugs.com/forums/inde
 
 Butchered and rebuilt it for my own needs on the eqemu Retribution server. Find Donnie the druid in the bazaar for a demo & services.
 
-
+# trader.mac
+Command your bazaar trader to enable/disable trader mode to allow for you to offload items to it.
 
 ## Future Updates
 
