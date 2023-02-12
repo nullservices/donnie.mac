@@ -1,4 +1,4 @@
-# custports.mac
+# donnie.mac
 EQ Druid Port/Buff bot w/ NPC like dialog. 
 
 Utilizes MQ2Cast &amp; the /casting command for ports &amp; buffs.
