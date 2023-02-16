@@ -13,7 +13,7 @@ Command your bazaar trader to enable/disable trader mode to allow for you to off
 
 ## Future Updates
 
-Add Pet Buff Feature
+Donnie.mac - Add Pet Buff Feature
 
 ## Installation
 
