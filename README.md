@@ -13,29 +13,7 @@ Command your bazaar trader to enable/disable trader mode to allow for you to off
 
 ## Future Updates
 
-Add fail safes for actions requested if the person is not in the group.
-
-Add fail safes for being in group after port duration or in group without porting for a time period.
-
-Add port/buff announcement on a timer
-
-Create port categorization by continent/area
-
-Add donation message / thanks after accepting trade.
-
-Auto recast if fizzle
-
-Include a Memming spell & Casting spell announcement
-
-Decline invites.
-
-## Ideas
-
-Store names & donations.
-
-Create a leaderboard for top donations. Can have it in a dialog as "[donators] / [donors] / [leaderboard]"
-
-Expand to other classes. Use the ${Me.Class.Name.Equal"CLASS"} syntax for class specific requests.
+Add Pet Buff Feature
 
 ## Installation
 
