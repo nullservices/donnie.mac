@@ -1,39 +1,19 @@
-# custports.mac
-EQ Druid Port/Buff bot w/ NPC like dialog. 
-
+# donnie.mac
+EQ Druid Buff/Port bot w/ NPC like dialog. 
+  ++Cleric Support Added: Buffs Aego / Temp added. 
+  
 Utilizes MQ2Cast &amp; the /casting command for ports &amp; buffs.
 
 Based on TheDroodUrLookingFor PortBot.mac -- https://www.mmobugs.com/forums/index.php?threads/guild-port-bot.32205/
 
 Butchered and rebuilt it for my own needs on the eqemu Retribution server. Find Donnie the druid in the bazaar for a demo & services.
 
-
+# trader.mac
+Command your bazaar trader to enable/disable trader mode to allow for you to offload items to it.
 
 ## Future Updates
 
-Add fail safes for actions requested if the person is not in the group.
-
-Add fail safes for being in group after port duration or in group without porting for a time period.
-
-Add port/buff announcement on a timer
-
-Create port categorization by continent/area
-
-Add donation message / thanks after accepting trade.
-
-Auto recast if fizzle
-
-Include a Memming spell & Casting spell announcement
-
-Decline invites.
-
-## Ideas
-
-Store names & donations.
-
-Create a leaderboard for top donations. Can have it in a dialog as "[donators] / [donors] / [leaderboard]"
-
-Expand to other classes. Use the ${Me.Class.Name.Equal"CLASS"} syntax for class specific requests.
+Donnie.mac - Add Pet Buff Feature
 
 ## Installation
 
@@ -42,7 +22,7 @@ Download or copy the custports.mac to your MQ2 Macros folder.
 ## Usage
 
 ```
-/mac custports.mac
+/mac donnie.mac
 ```
 
 ## MQ2 Macro Coding References:
