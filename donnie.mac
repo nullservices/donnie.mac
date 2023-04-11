@@ -335,8 +335,6 @@ Sub Event_EB(Line,Sender)
 | Change keypress event to whatever your Perma Haste AA is OR call the AA specifically |
 Sub Event_Ready(Line,Sender)
 /keypress 2
-/pause 2s
-/disband
 /return
 
 
