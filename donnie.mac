@@ -31,6 +31,7 @@
 #Event REGEN "#1# tells you, 'REGEN'"
 #Event MOVEMENT "#1# tells you, 'MOVEMENT'"
 #Event EB "#1# tells you, 'EB'"
+#Event HASTE "#1# tells you, 'HASTE'"
 |------------------------------------------------------------| 
 |     Druid Port Events 
 |------------------------------------------------------------| 
@@ -84,6 +85,14 @@
 |------------------------------------------------------------| 
 #Event Aego "#1# tells you, 'aego'"
 #Event Temp "#1# tells you, 'temp'"
+
+
+|------------------------------------------------------------| 
+|	Shaman Buff Events 
+|------------------------------------------------------------| 
+
+#Event PHaste "#1# tells you, 'haste'"
+#Event Ready "#1# tells you, 'ready'"
 
 |------------------------------------------------------------| 
 |	Main Rountine / Loop
@@ -192,11 +201,13 @@ CHATMETHOD Buffing: ${Target.CleanName} -- ${BuffToCast} --
 |   Chatter
 |------------------------------------------------------------| 
 
+|-----------------------------|
+|	Introductions	     |
+|-----------------------------|
 
 Sub Event_Hail(Line,Sender)
 /Tell ${Sender} Greetings ${Sender}, How may I be of [service] to you? *Please say only the word*
 /return
-
 
 Sub Event_Services(Line,Sender)
 /if (${Me.Class.Name.Equal[Druid]}) /Tell ${Sender} I can either [port] you or [buff] you. *shakes cup* Put the tip in here *shakes cup*
@@ -206,6 +217,18 @@ Sub Event_Services(Line,Sender)
 /if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} I can [buff] you. *shakes cup* Put the tip in here *shakes cup*
 /return
 
+Sub Event_Services(Line,Sender)
+/if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} I can [buff] you. *shakes cup* Put the tip in here *shakes cup*
+/return
+
+Sub Event_Services(Line,Sender)
+/if (${Me.Class.Name.Equal[Shaman]}) /Tell ${Sender} I can [buff] you. *shakes cup* Put the tip in here *shakes cup*
+/return
+
+|----------------------------------------------------|
+| Druid Port Invites and Shaman Haste Invite 	   |
+|----------------------------------------------------|
+
 
 Sub Event_List(Line,Sender)
 /if (!${Me.Class.Name.Equal[Druid]}) /return
@@ -214,7 +237,6 @@ Sub Event_List(Line,Sender)
 /return
 
 Sub Event_Invite(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
 /disband
 /delay 2
 /invite ${Sender} 
@@ -224,21 +246,101 @@ Sub Event_Invite(Line,Sender)
 /return
 
 Sub Event_MainPort(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
-/delay 1s
-/Tell ${Sender} Please drop your group so I can [invite] you. I will make you leader so you can reinvite your group if needed. Once you are ready, tell me the zone name from the [list] of available port locations.
+/if (${Me.Class.Name.Equal[Druid]}) /Tell ${Sender} Please drop your group so I can [invite] you. I will make you leader so you can re-invite your group if needed. Once you are ready, tell me the zone name from the [list] of available port locations.
 /return
 
 
+
+Sub Event_Haste(Line,Sender)
+/if (${Me.Class.Name.Equal[Shaman]}) /Tell ${Sender} Please drop your group so I can [invite] you. I will make you leader so you can re-invite your group if needed. Once you are ready, reply with [ready] to get Permanent Haste.
+/return
+
+
+
 |------------------------------------------------------------| 
-|  Buffs
+|  Buff Chatter
 |------------------------------------------------------------|
 
 Sub Event_Buff(Line,Sender)
 /if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} Please tell me the type of buff you would like. [HP]
 /if (${Me.Class.Name.Equal[Druid]}) /Tell ${Sender} Please tell me the type of buff you would like. [HP], [STR], [DS], [REGEN], [MOVEMENT], [EB]
-
+/if (${Me.Class.Name.Equal[Shaman]}) /Tell ${Sender} Please tell me the type of buff you would like [HASTE].   *Additional Buffs To Be Added*
 /return
+
+
+
+|----------|
+| HP Buffs |
+|----------|
+
+Sub Event_HP(Line,Sender)
+/if (${Me.Class.Name.Equal[Druid]}) /Tell ${Sender} HP Buffs: [Skin like Nature] (46)| [Skin like Diamond] (36)| [Skin like Rock] (14)|
+/if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} HP Buffs: [Aego] (60)| [Temp] (40)|
+/return
+
+|-----------|
+| STR Buffs |
+|-----------|
+
+Sub Event_STR(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} Str Buff: [Storm Strength] (44)| [Strength of Stone] (34)| [Strength of Earth] (07)|
+/return
+
+|----------|
+| DS Buffs |
+|----------|
+
+Sub Event_DS(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} DS: [Shield of Thorns] (47)| [Shield of Spikes] (37)| [Shield of Thistles] (7)|
+/return
+
+|-------------|
+| Regen Buffs |
+|-------------|
+
+Sub Event_Regen(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} Regen: [Chloroplast] (42)| [Regeneration] (34)|
+/return
+
+|----------------|
+| Movement Buffs |
+|----------------|
+
+Sub Event_Movement(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} Movement: [Spirit of Wolf] (10)|
+/return
+
+|----------|
+| EB Buffs |
+|----------|
+
+Sub Event_EB(Line,Sender)
+/if (!${Me.Class.Name.Equal[Druid]}) /return
+/delay 1s
+/Tell ${Sender} EB: [Everlasting Breath] (50)|
+/return
+
+|---------------|
+| Shaman Spells |
+|---------------|
+
+| Change keypress event to whatever your Perma Haste AA is OR call the AA specifically |
+Sub Event_Ready(Line,Sender)
+/keypress 2
+/return
+
+
+|---------------|
+| Cleric Spells |
+|---------------|
 
 Sub Event_Aego(Line,Sender)
 /call Buffing "${Sender}" "Aegolism"
@@ -248,40 +350,9 @@ Sub Event_Temp(Line,Sender)
 /call Buffing "${Sender}" "Temperance"
 /return
 
-Sub Event_HP(Line,Sender)
-/if (${Me.Class.Name.Equal[Druid]}) /Tell ${Sender} HP Buffs: [Skin like Nature] (46)| [Skin like Diamond] (36)| [Skin like Rock] (14)|
-/if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} HP Buffs: [Aego] (60)| [Temp] (40)|
-/return
-
-Sub Event_STR(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
-/delay 1s
-/Tell ${Sender} Str Buff: [Storm Strength] (44)| [Strength of Stone] (34)| [Strength of Earth] (07)|
-/return
-
-Sub Event_DS(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
-/delay 1s
-/Tell ${Sender} DS: [Shield of Thorns] (47)| [Shield of Spikes] (37)| [Shield of Thistles] (7)|
-/return
-
-Sub Event_Regen(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
-/delay 1s
-/Tell ${Sender} Regen: [Chloroplast] (42)| [Regeneration] (34)|
-/return
-
-Sub Event_Movement(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
-/delay 1s
-/Tell ${Sender} Movement: [Spirit of Wolf] (10)|
-/return
-
-Sub Event_EB(Line,Sender)
-/if (!${Me.Class.Name.Equal[Druid]}) /return
-/delay 1s
-/Tell ${Sender} EB: [Everlasting Breath] (50)|
-/return
+|--------------|
+| Druid Spells |
+|--------------|
 
 Sub Event_Skinlikenature(Line,Sender)
 /call Buffing "${Sender}" "Skin like Nature"
