@@ -85,6 +85,7 @@
 |------------------------------------------------------------| 
 #Event Aego "#1# tells you, 'aego'"
 #Event Temp "#1# tells you, 'temp'"
+#Event Virtue "#1# tells you, 'virtue'"
 
 
 |------------------------------------------------------------| 
@@ -275,7 +276,7 @@ Sub Event_Buff(Line,Sender)
 
 Sub Event_HP(Line,Sender)
 /if (${Me.Class.Name.Equal[Druid]}) /Tell ${Sender} HP Buffs: [Skin like Nature] (46)| [Skin like Diamond] (36)| [Skin like Rock] (14)|
-/if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} HP Buffs: [Aego] (60)| [Temp] (40)|
+/if (${Me.Class.Name.Equal[Cleric]}) /Tell ${Sender} HP Buffs: [Aego] (60)| [Temp] (40)| [Virtue] (62)|
 /return
 
 |-----------|
@@ -348,6 +349,10 @@ Sub Event_Aego(Line,Sender)
 
 Sub Event_Temp(Line,Sender)
 /call Buffing "${Sender}" "Temperance"
+/return
+
+Sub Event_Virtue(Line,Sender)
+/call Buffing "${Sender}" "Virtue"
 /return
 
 |--------------|
